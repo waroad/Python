@@ -78,6 +78,6 @@ while size>0:
             n=1
         if n==1:
             n=0
+            start=time.time()
             time.sleep(0.5)
-            driver.find_element_by_xpath(xpath_logout).click()
-            break
+            driver.refresh()
