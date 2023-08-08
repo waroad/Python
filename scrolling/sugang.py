@@ -42,11 +42,12 @@ while size>0:
     driver.find_element_by_xpath(xpath2).send_keys(Keys.CONTROL, 'v') # id 붙여넣기
     pyperclip.copy(my_pw) # 비밀번호 복사
     driver.find_element_by_xpath(xpath3).send_keys(Keys.CONTROL, 'v') # 비밀번호 붙여넣기
+    time.sleep(0.3)
     driver.find_element_by_xpath(xpath4).click() # 로그인 클릭
     driver.implicitly_wait(25)
     start=time.time()
     driver.find_element_by_xpath(xpath_gguromi).click() # 꾸러미 목록 클릭
-    time.sleep(2)
+    time.sleep(1)
     tt=driver.find_elements_by_xpath('//*[@id="grid01cnt"]')
     print(tt[0].text, tt[0].get_attribute('textContent'))
     size=int(tt[0].get_attribute('textContent')[0])# 수꾸에 담긴 과목 개수
@@ -60,7 +61,7 @@ while size>0:
                 alert = Alert(driver)
                 driver.implicitly_wait(500)
                 alert.accept()
-                time.sleep(1)
+                time.sleep(0.5)
                 alert.dismiss()
                 print(i,datetime.datetime.now())
                 n=1
