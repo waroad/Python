@@ -14,12 +14,9 @@ xpath2 = '//*[@id="userId"]'
 xpath3 = '//*[@id="pssrd"]'
 xpath4 = '//*[@id="btn_login"]'
 xpath_gguromi='//*[@id="tabs2"]'
-xpath5_1 = '//*[@id="grid01"]/tr['
-xpath5_2 = ']/td[11]'
-xpath6_1 = '//*[@id="grid01"]/tr['
-xpath6_2 = ']/td[12]'
-xpath7_1 = '//*[@id="grid01"]/tr['
-xpath7_2= ']/td[2]/a'
+xpath5_1 = '//*[@id="grid01"]/tr/td[11]'
+xpath6_1 = '//*[@id="grid01"]/tr/td[12]'
+xpath7_1 = '//*[@id="grid01"]/tr/td[2]/a'
 xpath_time = '//*[@id="timeStatus"]'
 xpath_logout = '//*[@id="header"]/div[1]/div/div/div/ul/li[4]/a'
 xpath_size='//*[@id="lectPackReqGrid"]/div[2]/table/tbody/tr'
@@ -47,17 +44,28 @@ while size>0:
     driver.implicitly_wait(25)
     start=time.time()
     driver.find_element_by_xpath(xpath_gguromi).click() # 꾸러미 목록 클릭
-    time.sleep(1)
+    time.sleep(2)
     tt=driver.find_elements_by_xpath('//*[@id="grid01cnt"]')
     print(tt[0].text, tt[0].get_attribute('textContent'))
     size=int(tt[0].get_attribute('textContent')[0])# 수꾸에 담긴 과목 개수
     while size>0:
-        driver.implicitly_wait(3)
+        while True:
+            try:
+                driver.find_element_by_xpath(xpath_gguromi).click() # 꾸러미 목록 클릭
+                break
+            except:
+                pass
+        print("ww")
+        time.sleep(0.08)
         for i in range(1,size+1):
-            limited=driver.find_element_by_xpath(xpath5_1+str(i)+xpath5_2).text
-            current=driver.find_element_by_xpath(xpath6_1+str(i)+xpath6_2).text
+            try:
+                limited=driver.find_element_by_xpath(xpath5_1).text
+                current=driver.find_element_by_xpath(xpath6_1).text
+            except:
+                break
+            print(limited,current)
             if limited>current:
-                driver.find_element_by_xpath(xpath7_1+str(i)+xpath7_2).click()
+                driver.find_element_by_xpath(xpath7_1).click()
                 alert = Alert(driver)
                 driver.implicitly_wait(500)
                 alert.accept()
@@ -71,4 +79,3 @@ while size>0:
         if n==1:
             driver.find_element_by_xpath(xpath_logout).click()
             break
-        driver.refresh()
